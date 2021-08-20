@@ -1,0 +1,314 @@
+{
+	"info": {
+		"_postman_id": "4f732110-9b71-4f81-9872-a70daab07d50",
+		"name": "Cadence",
+		"description": "A API realiza o registro de domínios, inicia workers e inicia jobs. Também é possível consultar os jobs executados.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register Domain",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/domain/register/new-domain",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"domain",
+						"register",
+						"new-domain"
+					]
+				},
+				"description": "\"Register domain\" registra um novo domínio no cadence uber"
+			},
+			"response": []
+		},
+		{
+			"name": "Start Single Worker",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"domain\":\"new-domain\",\"taskList\":\"JOB_QUEUE\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/worker/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"worker",
+						"start"
+					]
+				},
+				"description": "\"Start Single Worker\" inicia um novo worker no cadence informando qual o domínio e a task-list ."
+			},
+			"response": []
+		},
+		{
+			"name": "Start Job",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"domain\":\"new-domain\",\"jobId\":\"Outro teste\", \"taskList\":\"JOB_QUEUE\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/workflow/start-job",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"workflow",
+						"start-job"
+					]
+				},
+				"description": "\"Start Job\" coloca um job na fila."
+			},
+			"response": []
+		},
+		{
+			"name": "Register Sample Domains",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/domain/register/sample-domains",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"domain",
+						"register",
+						"sample-domains"
+					]
+				},
+				"description": "\"Register Sample Domains\" registra dois domínios de amostra para efetuar testes. São os domínios: \"domain_01\" e \"domain_02\""
+			},
+			"response": []
+		},
+		{
+			"name": "Start  Sample Domains Worker",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/worker/start/sample-domains-worker",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"worker",
+						"start",
+						"sample-domains-worker"
+					]
+				},
+				"description": "\"Start Sample Domains Worker\" sobe dois workers para cada domínio registrado no endpoint \"Register Sample Domains\". São iniciados um worker para a task-list \"JOB_QUEUE\" e outro para \"MAIL_QUEUE\" para cada um dos dois domains de amostra."
+			},
+			"response": []
+		},
+		{
+			"name": "Start Assync Job",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"domain\":\"new-domain\",\"jobId\":\"Teste 7\", \"taskList\":\"JOB_QUEUE\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/workflow/start-assync-job",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"workflow",
+						"start-assync-job"
+					]
+				},
+				"description": "\"Start Assync Job\" inicia um job assincrono retornando os identificadores para posterior consulta no endpoint \"Get Workflow History By ID\""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all history job",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/workflow/history/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"workflow",
+						"history",
+						"all"
+					]
+				},
+				"description": "\"Get all history job\" retorna uma lista em memória dos job já executados."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Workflow History By ID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"domain\":\"domain_01\",\"workflowId\":\"4594b5b0-d8a4-473f-b9ad-e6b52c75c304\",\"runId\":\"49ed6976-1d04-4f68-bec3-cfd88f77fb93\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/workflow/history",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"workflow",
+						"history"
+					]
+				},
+				"description": "\"Get Workflow History By ID\" retorna informações do job executado assincronamente."
+			},
+			"response": []
+		},
+		{
+			"name": "Start Assync Sample Jobs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/workflow/start-assync-sample-jobs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"workflow",
+						"start-assync-sample-jobs"
+					]
+				},
+				"description": "\"Start Assync Sample Jobs\" inicia 50 jobs para cada task-list e para cada domain de amostra. Enfim, starta 200 jobs assincronamente, 100 para o domain_01 e 100 para o domain_02"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all history job by filter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"field\":\"DOMAIN\",\"value\":\"domain_01\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/workflow/history/filter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"workflow",
+						"history",
+						"filter"
+					]
+				},
+				"description": "\"Get all history job by filter\" permite pesquisar o histórico em memória dos jobs."
+			},
+			"response": []
+		},
+		{
+			"name": "Clear history",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cadence-queue-job/rest/workflow/history/clear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cadence-queue-job",
+						"rest",
+						"workflow",
+						"history",
+						"clear"
+					]
+				},
+				"description": "\"Clear history\" somente limpa o histórico local."
+			},
+			"response": []
+		}
+	]
+}
