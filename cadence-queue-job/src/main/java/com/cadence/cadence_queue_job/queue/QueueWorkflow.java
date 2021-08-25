@@ -7,7 +7,7 @@ import com.uber.cadence.workflow.WorkflowMethod;
 
 public interface QueueWorkflow {
 	
-	@WorkflowMethod(executionStartToCloseTimeoutSeconds = 60)
+	@WorkflowMethod
 	JobSucessInfoDto executeJob(JobInfoForm form, String oid, TypeWorkflowExecution type);	
 	
 }

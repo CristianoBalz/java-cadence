@@ -1,5 +1,6 @@
 package com.cadence.cadence_queue_job.business;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +30,10 @@ public class WorkflowBusiness {
 		WorkflowClient workflowClient = WorkflowClientManager.getClient(form.getDomain());
 
 		QueueWorkflow workflow = workflowClient.newWorkflowStub(QueueWorkflow.class,
-				new WorkflowOptions.Builder().setTaskList(taskListEnum.getTaskList()).build());
+				new WorkflowOptions.Builder()
+				.setTaskList(taskListEnum.getTaskList()) //define para qual fila será enviado o job/taks-list
+				.setExecutionStartToCloseTimeout(Duration.ofDays(365)) //define quanto tempo o job ficara ativo na fila até sua conclusão
+				.build());
 
 		String oid = UUID.randomUUID().toString();
 
@@ -51,7 +55,11 @@ public class WorkflowBusiness {
 		WorkflowClient workflowClient = WorkflowClientManager.getClient(form.getDomain());
 
 		QueueWorkflow workflow = workflowClient.newWorkflowStub(QueueWorkflow.class,
-				new WorkflowOptions.Builder().setTaskList(taskListEnum.getTaskList()).build());
+				new WorkflowOptions.Builder()
+				.setTaskList(taskListEnum.getTaskList()) //define para qual fila será enviado o job/taks-list
+				.setExecutionStartToCloseTimeout(Duration.ofDays(365)) //define quanto tempo o job ficara ativo na fila até sua conclusão
+				.setTaskList(taskListEnum.getTaskList())
+				.build());
 
 		String oid = UUID.randomUUID().toString();
 		try {
